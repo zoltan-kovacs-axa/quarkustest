@@ -1,0 +1,53 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  labels:
+    app.kubernetes.io/name: tutorial-app
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+  managedFields:
+  - apiVersion: route.openshift.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:app.kubernetes.io/name: {}
+          f:app.kubernetes.io/version: {}
+      f:spec:
+        f:port:
+          .: {}
+          f:targetPort: {}
+        f:tls:
+          .: {}
+          f:insecureEdgeTerminationPolicy: {}
+          f:termination: {}
+        f:to:
+          f:kind: {}
+          f:name: {}
+          f:weight: {}
+        f:wildcardPolicy: {}
+    manager: Mozilla
+    operation: Update
+  - apiVersion: route.openshift.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:ingress: {}
+    manager: openshift-router
+    operation: Update
+  name: tutorial-app-route
+  namespace: tutorial-app
+spec:
+  host: tutorial-app-route-tutorial-app.apps-crc.testing
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: tutorial-app
+    weight: 100
+  wildcardPolicy: None
